@@ -1,0 +1,36 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:jsx-a11y/strict",
+    "plugin:jest/recommended",
+    "plugin:css-modules/recommended",
+    "airbnb"
+  ],
+  "plugins": ["jsx-a11y", "css-modules"],
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["**/spec.js", "**/*.spec.js"],
+      "env": {
+        "jest": true
+      },
+      "plugins": ["jest"]
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+#signin-button {
+  background-color: #fc4c02;
+  width: 150px;
+  margin: auto;
+  padding: 10px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}

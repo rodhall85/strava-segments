@@ -1,0 +1,29 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "number-leading-zero": "never",
+    "color-no-invalid-hex": true,
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": [
+        "mixin",
+        "include",
+        "extend",
+        "at-root",
+        "debug",
+        "warn",
+        "error",
+        "if",
+        "else",
+        "for",
+        "each",
+        "while",
+        "content",
+        "return",
+        "function"
+      ]
+    }],
+    "selector-pseudo-class-no-unknown": [true, {
+      "ignorePseudoClasses": ["global"]
+    }]
+  }
+}
