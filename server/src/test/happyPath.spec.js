@@ -1,13 +1,13 @@
 const axios = require('axios');
 
-process.env.STRAVA_API_URL = 'https://example.com'
+process.env.STRAVA_API_URL = 'https://example.com';
 process.env.CLIENT_ID = 1000;
 process.env.CLIENT_SECRET = 'secret';
 
 const api = require('../handlers/stravaSegments');
 
 jest.mock('axios', () => ({
-  post: jest.fn()
+  post: jest.fn(),
 }));
 
 // const stubRequest = ({ statusCode = 200, body = { message: 'dummy response' } }) => {
@@ -24,18 +24,16 @@ describe('POST /getToken', () => {
   beforeEach(async () => {
     axios.post.mockClear();
 
-    axios.post.mockImplementation(() => {
-      return new Promise((resolve) => {
-        resolve({ 
-          status: 200, 
-          body: { 
-            access_token: 'some_access_token', 
-            refresh_token: 'some_refresh_token',
-            expires_at: 100000
-          }
-        });
+    axios.post.mockImplementation(() => new Promise((resolve) => {
+      resolve({
+        status: 200,
+        body: {
+          access_token: 'some_access_token',
+          refresh_token: 'some_refresh_token',
+          expires_at: 100000,
+        },
       });
-    });
+    }));
 
     response = await api.getToken({ queryStringParameters: { authorisationCode: 'foo' } });
   });
@@ -43,8 +41,8 @@ describe('POST /getToken', () => {
   it('should post request', () => {
     expect(axios.post).toHaveBeenCalled();
   });
-  
-  it('should post request with correct arguments', () => {    
+
+  it('should post request with correct arguments', () => {
     expect(axios.post).toHaveBeenCalledWith('https://example.com/oauth/token', {
       client_id: '1000',
       client_secret: 'secret',

@@ -24,14 +24,18 @@ module.exports.getToken = async (event) => {
   });
 
   return new Promise((resolve) => {
-    const { access_token, refresh_token, expires_at } = response.body;
-    
+    const {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      expires_at: expiresAt,
+    } = response.body;
+
     resolve({
       statusCode: response.status,
-      body: JSON.stringify({ 
-        access_token,
-        refresh_token,
-        expires_at,
+      body: JSON.stringify({
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        expires_at: expiresAt,
       }),
     });
   });
