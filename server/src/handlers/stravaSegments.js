@@ -1,18 +1,15 @@
 const axios = require('axios');
 
-const stravaApiUrl = 'https://www.strava.com';
-const clientId = 34566;
+const stravaApiUrl = process.env.STRAVA_API_URL;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 module.exports.getToken = async (event) => {
-  if (!event) {
+  if (!event || !event.queryStringParameters || !event.queryStringParameters.authorisationCode) {
     return new Promise((resolve) => {
       resolve({
         statusCode: 400,
-        headers: {
-          my_header: 'my_value',
-        },
         body: JSON.stringify({ error: 'missing authorisationCode in request' }),
-        isBase64Encoded: false,
       });
     });
   }
@@ -21,22 +18,21 @@ module.exports.getToken = async (event) => {
 
   const response = await axios.post(`${stravaApiUrl}/oauth/token`, {
     client_id: clientId,
-    client_secret: '',
+    client_secret: clientSecret,
     code: authorisationCode,
     grant_type: 'authorization_code',
   });
 
   return new Promise((resolve) => {
+    const { access_token, refresh_token, expires_at } = response.body;
+    
     resolve({
       statusCode: response.status,
-      headers: {
-        my_header: 'my_value',
-      },
-      body: JSON.stringify({ message: 'responseBody' }),
-      isBase64Encoded: false,
+      body: JSON.stringify({ 
+        access_token,
+        refresh_token,
+        expires_at,
+      }),
     });
   });
 };
-
-// authenticate - Call authenticate, get response,
-// then validate token to get access_token. Return access_token.
