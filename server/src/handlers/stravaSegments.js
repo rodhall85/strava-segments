@@ -19,16 +19,18 @@ module.exports.getToken = async (event) => {
   let response;
   try {
     response = await axios.post(
-      `${stravaApiUrl}/oauth/token`, 
+      `${stravaApiUrl}/oauth/token`,
       null,
       {
-        client_id: clientId,
-        client_secret: clientSecret,
-        code: authorisationCode,
-        grant_type: 'authorization_code',
+        params: {
+          client_id: clientId,
+          client_secret: clientSecret,
+          code: authorisationCode,
+          grant_type: 'authorization_code',
+        },
       },
     );
-  
+
     return new Promise((resolve) => {
       const {
         access_token: accessToken,
@@ -45,11 +47,10 @@ module.exports.getToken = async (event) => {
         }),
       });
     });
-
-  } catch ({ response }) {
-    return new Promise((resolve) => resolve({ 
-      statusCode: response.status === 400 ? 400 : 502,
-      body: response.status === 400 ? JSON.stringify(response.data) : null,
+  } catch (error) {
+    return new Promise(resolve => resolve({
+      statusCode: error.response.status === 400 ? 400 : 502,
+      body: error.response.status === 400 ? JSON.stringify(error.response.data) : null,
     }));
   }
 };

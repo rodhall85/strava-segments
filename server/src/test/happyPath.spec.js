@@ -47,10 +47,12 @@ describe('POST /getToken', () => {
       'https://example.com/oauth/token',
       null,
       {
-        client_id: '1000',
-        client_secret: 'secret',
-        code: 'foo',
-        grant_type: 'authorization_code',
+        params: {
+          client_id: '1000',
+          client_secret: 'secret',
+          code: 'foo',
+          grant_type: 'authorization_code',
+        },
       },
     );
   });

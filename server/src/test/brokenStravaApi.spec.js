@@ -21,19 +21,19 @@ jest.mock('axios', () => ({
 describe('Strava API is broken', () => {
   let response;
 
-  const setup = async ({ 
+  const setup = async ({
     statusCode = 200,
     data = {
       access_token: 'some_access_token',
       refresh_token: 'some_refresh_token',
       expires_at: 100000,
-    }
+    },
   }) => {
     axios.post.mockClear();
 
     axios.post.mockImplementation(() => new Promise((_, reject) => {
       reject({
-        response: { 
+        response: {
           status: statusCode,
           data,
         },
@@ -56,13 +56,13 @@ describe('Strava API is broken', () => {
   });
 
   it('should include message on reponse when Strava API returns 400', async () => {
-    const responseBody = { 
+    const responseBody = {
       message: 'Bad Request',
       errors: [{
         resource: 'OAuth',
         field: 'GrantType',
-        code: 'invalid'
-      }]
+        code: 'invalid',
+      }],
     };
 
     await setup({ statusCode: 400, data: responseBody });
@@ -77,7 +77,7 @@ describe('Strava API is broken', () => {
   });
 
   it.each([401, 403, 404, 500, 502, 504])('should NOT map Strava API response message to the response on error', async (statusCode) => {
-    await setup({ statusCode, data : { message: 'Nothing to see here!' } });
+    await setup({ statusCode, data: { message: 'Nothing to see here!' } });
 
     expect(response.body).toEqual(null);
   });

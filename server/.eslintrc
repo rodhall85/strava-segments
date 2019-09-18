@@ -9,5 +9,8 @@
     "env": {
         "jest": true,
         "node": true
+    },
+    "rules": {
+      "prefer-promise-reject-errors": 0
     }
   }
