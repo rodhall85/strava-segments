@@ -27,7 +27,7 @@ describe('POST /getToken', () => {
     axios.post.mockImplementation(() => new Promise((resolve) => {
       resolve({
         status: 200,
-        body: {
+        data: {
           access_token: 'some_access_token',
           refresh_token: 'some_refresh_token',
           expires_at: 100000,
@@ -43,12 +43,16 @@ describe('POST /getToken', () => {
   });
 
   it('should post request with correct arguments', () => {
-    expect(axios.post).toHaveBeenCalledWith('https://example.com/oauth/token', {
-      client_id: '1000',
-      client_secret: 'secret',
-      code: 'foo',
-      grant_type: 'authorization_code',
-    });
+    expect(axios.post).toHaveBeenCalledWith(
+      'https://example.com/oauth/token',
+      null,
+      {
+        client_id: '1000',
+        client_secret: 'secret',
+        code: 'foo',
+        grant_type: 'authorization_code',
+      },
+    );
   });
 
   it('should return 200', () => {

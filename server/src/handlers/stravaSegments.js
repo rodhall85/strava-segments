@@ -16,27 +16,40 @@ module.exports.getToken = async (event) => {
 
   const { authorisationCode } = event.queryStringParameters;
 
-  const response = await axios.post(`${stravaApiUrl}/oauth/token`, {
-    client_id: clientId,
-    client_secret: clientSecret,
-    code: authorisationCode,
-    grant_type: 'authorization_code',
-  });
-
-  return new Promise((resolve) => {
-    const {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      expires_at: expiresAt,
-    } = response.body;
-
-    resolve({
-      statusCode: response.status,
-      body: JSON.stringify({
+  let response;
+  try {
+    response = await axios.post(
+      `${stravaApiUrl}/oauth/token`, 
+      null,
+      {
+        client_id: clientId,
+        client_secret: clientSecret,
+        code: authorisationCode,
+        grant_type: 'authorization_code',
+      },
+    );
+  
+    return new Promise((resolve) => {
+      const {
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: expiresAt,
-      }),
+      } = response.data;
+
+      resolve({
+        statusCode: response.status,
+        body: JSON.stringify({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_at: expiresAt,
+        }),
+      });
     });
-  });
+
+  } catch ({ response }) {
+    return new Promise((resolve) => resolve({ 
+      statusCode: response.status === 400 ? 400 : 502,
+      body: response.status === 400 ? JSON.stringify(response.data) : null,
+    }));
+  }
 };
