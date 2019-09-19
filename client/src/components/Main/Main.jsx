@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Header from '../Header';
 import SignIn from '../SignIn';
 import { getToken } from '../../services/tokenApi';
 
@@ -25,8 +26,14 @@ const Main = () => {
     window.location.replace(`${stravaApiUrl}/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=read`);
   };
 
+  const signOut = () => {
+    console.log('signing out');
+    setAccessToken(undefined);
+  };
+
   return (
     <div>
+      <Header loggedIn={!!accessToken} userData={ { name: 'Rod Hall'} } signOut={signOut} />
       {
         !accessToken ? 
           <SignIn attemptSignIn={attemptSignIn} /> : 

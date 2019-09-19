@@ -22,6 +22,12 @@ describe('Main page', () => {
     window.location.replace.mockClear();
   });
 
+  it('should render <Header /> component', () => {
+    const header = wrapper.find('Header');
+
+    expect(header.length).toBe(1);
+  });
+
   it('should render <SignIn /> component', () => {
     const signIn = wrapper.find('SignIn');
 
