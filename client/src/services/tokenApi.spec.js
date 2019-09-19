@@ -5,13 +5,18 @@ import { getToken } from './tokenApi';
 process.env.REACT_APP_TOKEN_API_URL = 'https://tokenurl.com';
 
 jest.mock('axios', () => ({
-  get: jest.fn().mockImplementation(() => new Promise(resolve => {
+  get: jest.fn().mockImplementation(() => new Promise((resolve) => {
     resolve({
       status: 200,
       data: {
         access_token: 'some_access_token',
         refresh_token: 'some_refresh_token',
         expires_at: 100000,
+        athlete: {
+          id: 1,
+          name: 'Rod Hall',
+          image_url: 'https://someimageurl.png',
+        },
       },
     });
   })),
@@ -43,7 +48,12 @@ describe('token api', () => {
         access_token: 'some_access_token',
         refresh_token: 'some_refresh_token',
         expires_at: 100000,
-      }
+        athlete: {
+          id: 1,
+          name: 'Rod Hall',
+          image_url: 'https://someimageurl.png',
+        },
+      },
     };
 
     expect(response).toEqual(expectedResponse);

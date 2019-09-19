@@ -6,38 +6,38 @@ import { getToken } from '../../services/tokenApi';
 
 
 const Main = () => {
-  const [accessToken, setAccessToken] = useState(null);
+  const [userData, setUserData] = useState(null);
 
-  const attemptSignIn = () => {
-    const search = window.location.search;
+  const attemptSignIn = async () => {
+    const { search } = window.location;
     const params = new URLSearchParams(search);
     const code = params.get('code');
-  
+
     if (code) {
-        const accessToken = getToken(code);
-        setAccessToken(accessToken);
-        return;
+      const response = await getToken(code);
+      setUserData(response.data);
+      return;
     }
-        
+
     const stravaApiUrl = process.env.REACT_APP_STRAVA_API_URL;
     const clientId = process.env.REACT_APP_CLIENT_ID;
     const redirectUrl = process.env.REACT_APP_REDIRECT_URL;
-        
+
     window.location.replace(`${stravaApiUrl}/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=read`);
   };
 
   const signOut = () => {
     console.log('signing out');
-    setAccessToken(undefined);
+    setUserData(undefined);
   };
 
   return (
     <div>
-      <Header loggedIn={!!accessToken} userData={ { name: 'Rod Hall'} } signOut={signOut} />
+      <Header loggedIn={!!userData} athlete={userData && userData.athlete} signOut={signOut} />
       {
-        !accessToken ? 
-          <SignIn attemptSignIn={attemptSignIn} /> : 
-          <span>Got it!</span>
+        !userData
+          ? <SignIn attemptSignIn={attemptSignIn} />
+          : <span>Got it!</span>
       }
     </div>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Header from '.';
 import { sign } from 'crypto';
+import Header from '.';
 
 describe('Header', () => {
   let wrapper;
@@ -24,26 +24,27 @@ describe('Header', () => {
 
 describe('when user is logged in', () => {
   let wrapper;
-  let mockSignOut = jest.fn();
+  const mockSignOut = jest.fn();
 
   beforeEach(() => {
     wrapper = mount(
       <Header
         loggedIn
-        userData={ { name: 'Rod Hall' } }
+        athlete={{ name: 'Rod Hall' }}
         signOut={mockSignOut}
-      />);
+      />,
+    );
   });
 
   it('should display name', () => {
     const name = wrapper.find('span[children="Rod Hall"]');
-    
+
     expect(name.length).toBe(1);
   });
 
   it('should display sign out button', () => {
     const signOut = wrapper.find('span[children="Sign out"]');
-    
+
     expect(signOut.length).toBe(1);
   });
 
@@ -51,7 +52,7 @@ describe('when user is logged in', () => {
     const signOut = wrapper.find('span[children="Sign out"]');
 
     signOut.simulate('click');
-    
+
     expect(mockSignOut).toHaveBeenCalled();
   });
 });

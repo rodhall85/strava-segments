@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 describe('<SignIn />', () => {
   let wrapper;
-  let mockAttemptSignIn = jest.fn();
+  const mockAttemptSignIn = jest.fn();
 
   beforeEach(() => {
     wrapper = mount(<SignIn attemptSignIn={mockAttemptSignIn} />);
@@ -32,9 +32,9 @@ describe('<SignIn />', () => {
 
   it('should call attemptSignIn when SignIn button is clicked', () => {
     const button = wrapper.find('#signin-button');
-    
+
     button.simulate('click');
-   
+
     expect(mockAttemptSignIn).toHaveBeenCalled();
   });
   // ==============
@@ -42,9 +42,9 @@ describe('<SignIn />', () => {
   it('should redirect the user to authenticate when clicked', () => {
     const button = wrapper.find('#signin-button');
     const expectedUrl = 'https://example.com/oauth/authorize?client_id=12345&redirect_uri=https://example.com&response_type=code&scope=read';
-    
+
     button.simulate('click');
-   
+
     expect(window.location.replace).toHaveBeenCalledWith(expectedUrl);
   });
 
