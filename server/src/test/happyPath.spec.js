@@ -10,14 +10,6 @@ jest.mock('axios', () => ({
   post: jest.fn(),
 }));
 
-// const stubRequest = ({ statusCode = 200, body = { message: 'dummy response' } }) => {
-//   axios.post.mockImplementation(() => {
-//     return new Promise((resolve) => {
-//       resolve({ statusCode, body });
-//     });
-//   });
-// };
-
 describe('POST /getToken', () => {
   let response;
 
@@ -31,6 +23,12 @@ describe('POST /getToken', () => {
           access_token: 'some_access_token',
           refresh_token: 'some_refresh_token',
           expires_at: 100000,
+          athlete: {
+            id: 1,
+            firstname: 'Rod',
+            lastname: 'Hall',
+            profile: 'https://someaddressforimage.png',
+          },
         },
       });
     }));
@@ -71,5 +69,17 @@ describe('POST /getToken', () => {
 
   it('should contain "expires_at" on the response', () => {
     expect(JSON.parse(response.body).expires_at).toBe(100000);
+  });
+
+  it('should contain "athlete.id" on the response', () => {
+    expect(JSON.parse(response.body).athlete.id).toBe(1);
+  });
+
+  it('should contain "athlete.name" on the response', () => {
+    expect(JSON.parse(response.body).athlete.name).toBe('Rod Hall');
+  });
+
+  it('should contain "athlete.image_url" on the response', () => {
+    expect(JSON.parse(response.body).athlete.image_url).toBe('https://someaddressforimage.png');
   });
 });

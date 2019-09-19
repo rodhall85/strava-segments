@@ -36,6 +36,7 @@ module.exports.getToken = async (event) => {
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: expiresAt,
+        athlete,
       } = response.data;
 
       resolve({
@@ -44,6 +45,11 @@ module.exports.getToken = async (event) => {
           access_token: accessToken,
           refresh_token: refreshToken,
           expires_at: expiresAt,
+          athlete: {
+            id: athlete.id,
+            name: `${athlete.firstname} ${athlete.lastname}`,
+            image_url: athlete.profile,
+          },
         }),
       });
     });
