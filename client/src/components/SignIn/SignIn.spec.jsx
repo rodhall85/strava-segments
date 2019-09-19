@@ -2,26 +2,20 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
 
-import * as tokenApi from '../../services/tokenApi';
-
-process.env.REACT_APP_STRAVA_API_URL = 'https://example.com';
-process.env.REACT_APP_CLIENT_ID = 12345;
-process.env.REACT_APP_REDIRECT_URL = 'https://example.com';
-
 import SignIn from './SignIn';
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 describe('<SignIn />', () => {
   let wrapper;
-  window.location.replace = jest.fn();
+  let mockAttemptSignIn = jest.fn();
 
   beforeEach(() => {
-    wrapper = mount(<SignIn />);
+    wrapper = mount(<SignIn attemptSignIn={mockAttemptSignIn} />);
   });
 
   afterEach(() => {
-    window.location.replace.mockClear();
+    mockAttemptSignIn.mockClear();
   });
 
   it('should render a message', () => {
@@ -36,6 +30,15 @@ describe('<SignIn />', () => {
     expect(button.length).toBe(1);
   });
 
+  it('should call attemptSignIn when SignIn button is clicked', () => {
+    const button = wrapper.find('#signin-button');
+    
+    button.simulate('click');
+   
+    expect(mockAttemptSignIn).toHaveBeenCalled();
+  });
+  // ==============
+/*
   it('should redirect the user to authenticate when clicked', () => {
     const button = wrapper.find('#signin-button');
     const expectedUrl = 'https://example.com/oauth/authorize?client_id=12345&redirect_uri=https://example.com&response_type=code&scope=read';
@@ -71,4 +74,5 @@ describe('<SignIn />', () => {
       expect(window.location.replace).not.toHaveBeenCalled();
     });
   });
+  */
 });

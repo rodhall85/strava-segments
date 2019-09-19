@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import SignIn from './components/SignIn';
+import Main from './components/Main';
 import './App.css';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/" component={SignIn} match="exact"/>        
+          <Route path="/" component={Main} match="exact"/>        
         </Switch>
       </div>
     </Router>
