@@ -1,15 +1,28 @@
 import React from 'react';
 
+import { getToken } from '../../services/tokenApi';
+
 import './SignIn.css';
 
-const signin = () => {
-  // TODO: Move these to env vars
-  const stravaApiAuthUrl = 'https://www.strava.com/oauth/authorize';
-  const clientId = 34566;
-  const redirectUrl = 'http://localhost:3000';
+const signin = (props) => {
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const code = params.get('code');
 
-  window.location.replace(`${stravaApiAuthUrl}?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=read`);
+  if (code) {
+    getToken(code);
+    return;
+  }
+    
+  const stravaApiUrl = process.env.REACT_APP_STRAVA_API_URL;
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const redirectUrl = process.env.REACT_APP_REDIRECT_URL;
+    
+  window.location.replace(`${stravaApiUrl}/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=read`);
 };
+
+// if code is present in the url then exchange token otherwise authorize with Strava
+// if access_token is in the cookie then check validity and refresh if needed
 
 export default () => (
   // if we have a code in the query string then get token
