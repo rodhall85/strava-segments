@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './SignIn.css';
 
@@ -17,5 +18,9 @@ const SignIn = ({ attemptSignIn }) => (
     </div>
   </div>
 );
+
+SignIn.propTypes = {
+  attemptSignIn: PropTypes.func.isRequired,
+};
 
 export default SignIn;

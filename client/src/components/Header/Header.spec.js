@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { sign } from 'crypto';
 import Header from '.';
 
 describe('Header', () => {

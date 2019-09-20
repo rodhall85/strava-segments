@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Header = ({ loggedIn, athlete = {}, signOut }) => {
   const renderAccountInfo = () => {
@@ -6,10 +7,12 @@ const Header = ({ loggedIn, athlete = {}, signOut }) => {
       return (
         <span>
           <span>{athlete.name}</span>
-          <span onClick={signOut}>Sign out</span>
+          <span onClick={signOut} onKeyUp={signOut} role="button" tabIndex="0">Sign out</span>
         </span>
       );
     }
+
+    return null;
   };
 
   return (
@@ -18,6 +21,14 @@ const Header = ({ loggedIn, athlete = {}, signOut }) => {
       {renderAccountInfo()}
     </div>
   );
+};
+
+Header.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+  athlete: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  signOut: PropTypes.func.isRequired,
 };
 
 export default Header;

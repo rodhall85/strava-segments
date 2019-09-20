@@ -27,7 +27,6 @@ const Main = () => {
   };
 
   const signOut = () => {
-    console.log('signing out');
     setUserData(undefined);
   };
 

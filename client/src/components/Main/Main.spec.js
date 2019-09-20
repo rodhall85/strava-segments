@@ -1,7 +1,5 @@
 import React from 'react';
-import Enzyme, {
-  mount,
-} from 'enzyme';
+import { mount } from 'enzyme';
 
 import Main from '.';
 import * as tokenApi from '../../services/tokenApi';
