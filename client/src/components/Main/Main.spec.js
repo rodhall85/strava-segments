@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 
 import Main from '.';
 import * as tokenApi from '../../services/tokenApi';
-import { doesNotReject } from 'assert';
 
 process.env.REACT_APP_STRAVA_API_URL = 'https://example.com';
 process.env.REACT_APP_CLIENT_ID = 12345;

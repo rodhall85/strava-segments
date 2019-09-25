@@ -16,7 +16,6 @@ const Main = () => {
 
     if (code) {
       const response = await getToken(code);
-      console.log('set state', JSON.stringify(userData));
       setUserData(response.data);
 
       return;

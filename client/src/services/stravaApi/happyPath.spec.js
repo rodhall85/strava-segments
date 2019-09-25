@@ -27,7 +27,7 @@ describe('strava api', () => {
 
   it('should call the api to get segments with the access_token', () => {
     const expectedRequest = [
-      'https://fake-strava.com/api/v3/segments/starred', 
+      'https://fake-strava.com/api/v3/segments/starred',
       {
         headers: {
           Authorization: 'Bearer fake_access_token',
