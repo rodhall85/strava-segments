@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 
 import Main from '.';
 import * as tokenApi from '../../services/tokenApi';
+import { doesNotReject } from 'assert';
 
 process.env.REACT_APP_STRAVA_API_URL = 'https://example.com';
 process.env.REACT_APP_CLIENT_ID = 12345;
@@ -32,6 +33,12 @@ describe('Main page', () => {
     expect(signIn.length).toBe(1);
   });
 
+  it('should not render <SegmentsList /> component if the is no "code" in url', () => {
+    const segmentsList = wrapper.find('SegmentsList');
+
+    expect(segmentsList.length).toBe(0);
+  });
+
   describe('user sign in', () => {
     it('should redirect the user to authenticate when clicked', () => {
       const button = wrapper.find('#signin-button');
@@ -45,11 +52,12 @@ describe('Main page', () => {
     describe('when "code" is in the query string', () => {
       const spy = jest.spyOn(tokenApi, 'getToken');
 
-      beforeEach(() => {
+      beforeEach(async (done) => {
         window.history.pushState({}, '', '?code=foo');
         const button = wrapper.find('#signin-button');
 
-        button.simulate('click');
+        await button.simulate('click');
+        done();
       });
 
       afterEach(() => {
@@ -67,6 +75,12 @@ describe('Main page', () => {
       it('should not redirect user', () => {
         expect(window.location.replace).not.toHaveBeenCalled();
       });
+
+      // it('should render <SegmentsList /> component', () => {
+      //   const segmentsList = wrapper.find('SegmentsList');
+      //   console.log(wrapper.debug());
+      //   expect(segmentsList.length).toBe(1);
+      // });
 
       // it('should hide the SignIn component now', () => {
       //   const signIn = wrapper.find('SignIn');

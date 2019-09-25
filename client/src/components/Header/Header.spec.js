@@ -7,7 +7,7 @@ describe('Header', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Header />);
+    wrapper = mount(<Header loggedIn={false} signOut={() => {}} />);
   });
 
   it('shuold render a Header component', () => {

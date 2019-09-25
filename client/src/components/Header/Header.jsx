@@ -26,9 +26,13 @@ const Header = ({ loggedIn, athlete = {}, signOut }) => {
 Header.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   athlete: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
+    name: PropTypes.string,
+  }),
   signOut: PropTypes.func.isRequired,
+};
+
+Header.defaultProps = {
+  athlete: {},
 };
 
 export default Header;

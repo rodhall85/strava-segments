@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Header from '../Header';
 import SignIn from '../SignIn';
+import SegmentsList from '../SegmentsList';
 import { getToken } from '../../services/tokenApi';
 
 
@@ -15,7 +16,9 @@ const Main = () => {
 
     if (code) {
       const response = await getToken(code);
+      console.log('set state', JSON.stringify(userData));
       setUserData(response.data);
+
       return;
     }
 
@@ -36,7 +39,7 @@ const Main = () => {
       {
         !userData
           ? <SignIn attemptSignIn={attemptSignIn} />
-          : <span>Got it!</span>
+          : <SegmentsList />
       }
     </div>
   );
