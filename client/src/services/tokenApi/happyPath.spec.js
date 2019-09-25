@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { getToken } from './tokenApi';
+import { getToken } from '.';
 
-process.env.REACT_APP_TOKEN_API_URL = 'https://tokenurl.com';
+process.env.REACT_APP_TOKEN_API_URL = 'https://fake-token-url.com';
 
 jest.mock('axios', () => ({
   get: jest.fn().mockImplementation(() => new Promise((resolve) => {
@@ -37,7 +37,7 @@ describe('token api', () => {
     getToken('foo');
 
     // TODO : Sort out CORS
-    expect(axios.get).toHaveBeenCalledWith('https://bypasscors.herokuapp.com/api/?url=https://tokenurl.com/getToken?authorisationCode=foo');
+    expect(axios.get).toHaveBeenCalledWith('https://fake-token-url.com/getToken?authorisationCode=foo');
   });
 
   it('responds with the user tokens', async () => {

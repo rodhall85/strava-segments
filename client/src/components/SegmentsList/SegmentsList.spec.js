@@ -157,7 +157,6 @@ describe('segments list', () => {
     wrapper.update();
 
     const listItems = wrapper.find('li');
-    console.log(listItems.debug());
     expect(listItems.length).toBe(3);
   });
 
