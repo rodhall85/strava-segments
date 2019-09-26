@@ -172,6 +172,7 @@ describe('segments list', () => {
     expect(listItem.find('span.time-from-kom').text()).toBe('3');
     expect(listItem.find('span.distance').text()).toBe('1000');
     expect(listItem.find('span.elevation-gain').text()).toBe('12');
+    expect(listItem.find('span.top-three-athletes').text()).toBe('Mr Pink - 97sMrs Orange - 98sRod Hall - 100s');
   });
 
   it('should render second list item correctly', () => {
@@ -186,6 +187,7 @@ describe('segments list', () => {
     expect(listItem.find('span.time-from-kom').text()).toBe('2');
     expect(listItem.find('span.distance').text()).toBe('2000');
     expect(listItem.find('span.elevation-gain').text()).toBe('4');
+    expect(listItem.find('span.top-three-athletes').text()).toBe('Mr Orange - 198sRod Hall - 200sMrs Orange - 201s');
   });
 
   it('should render third list item correctly', () => {
@@ -200,5 +202,6 @@ describe('segments list', () => {
     expect(listItem.find('span.time-from-kom').text()).toBe('30');
     expect(listItem.find('span.distance').text()).toBe('3000');
     expect(listItem.find('span.elevation-gain').text()).toBe('30');
+    expect(listItem.find('span.top-three-athletes').text()).toBe('Mr Pink - 270sMrs Orange - 273sMr Brown - 275s');
   });
 });

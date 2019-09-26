@@ -15,19 +15,35 @@ const SegmentsList = ({ accessToken }) => {
   }, []);
 
   return (
-    <ul>
-      {segments && segments.map((segment) => (
-        <li key={segment.id}>
-          <span className="segment-name">{segment.name}</span>
-          <span className="pr">{segment.personalRecord}</span>
-          <span className="ranking">{segment.ranking}</span>
-          <span className="athlete-count">{segment.athleteCount}</span>
-          <span className="time-from-kom">{segment.timeFromKom}</span>
-          <span className="distance">{segment.distance}</span>
-          <span className="elevation-gain">{segment.elevationGain}</span>
-        </li>
-      ))}
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>My PR</th>
+          <th>My Ranking</th>
+          <th>Total Athletes</th>
+          <th>Time from KOM</th>
+          <th>Distance</th>
+          <th>Elevation Gain</th>
+          <th>Top 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        {segments && segments.map((segment) => (
+          <tr key={segment.id}>
+            <td className="segment-name">{segment.name}</td>
+            <td className="pr">{segment.personalRecord}</td>
+            <td className="ranking">{segment.ranking}</td>
+            <td className="athlete-count">{segment.athleteCount}</td>
+            <td className="time-from-kom">{segment.timeFromKom}</td>
+            <td className="distance">{segment.distance}</td>
+            <td className="elevation-gain">{segment.elevationGain}</td>
+            <td className="top-three-athletes">{segment.topThreeAthletes}</td>
+
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
