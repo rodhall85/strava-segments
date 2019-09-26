@@ -17,7 +17,6 @@ const Main = () => {
     if (code) {
       const response = await getToken(code);
       setUserData(response.data);
-
       return;
     }
 
@@ -38,7 +37,7 @@ const Main = () => {
       {
         !userData
           ? <SignIn attemptSignIn={attemptSignIn} />
-          : <SegmentsList />
+          : <SegmentsList accessToken={userData.access_token} />
       }
     </div>
   );
