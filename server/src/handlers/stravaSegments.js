@@ -41,6 +41,9 @@ module.exports.getToken = async (event) => {
 
       resolve({
         statusCode: response.status,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify({
           access_token: accessToken,
           refresh_token: refreshToken,

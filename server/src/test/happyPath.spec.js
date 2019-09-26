@@ -82,4 +82,8 @@ describe('POST /getToken', () => {
   it('should contain "athlete.image_url" on the response', () => {
     expect(JSON.parse(response.body).athlete.image_url).toBe('https://someaddressforimage.png');
   });
+
+  it('should add Access-Control-Allow-Origin header', () => {
+    expect(response.headers['Access-Control-Allow-Origin']).toBe('*');
+  });
 });
