@@ -9,7 +9,7 @@ const StyledHeader = styled.div`
 `;
 
 const StyledTitle = styled.h1`
-  color: #eee;
+  color: #70151d;
   text-transform: uppercase;
   margin: 0;
   padding: 20px;
