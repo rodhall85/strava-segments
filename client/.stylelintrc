@@ -24,6 +24,7 @@
     }],
     "selector-pseudo-class-no-unknown": [true, {
       "ignorePseudoClasses": ["global"]
-    }]
+    }],
+    "declaration-empty-line-before": "never"
   }
 }
