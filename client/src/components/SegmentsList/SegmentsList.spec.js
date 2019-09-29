@@ -10,45 +10,45 @@ jest.mock('../../services/stravaApi', () => ({
     resolve([{
       id: 1,
       name: 'Segment 1',
-      personalRecord: 100,
+      personalRecord: '100s',
       ranking: 3,
       athleteCount: 1000,
-      timeFromKom: 3,
-      distance: 1000,
-      elevationGain: 12,
-      topThreeAthletes: [
-        'Mr Pink - 97s',
-        'Mrs Orange - 98s',
-        'Rod Hall - 100s',
-      ],
+      timeFromKom: '3s',
+      distance: '1000m',
+      elevationGain: '12m',
+      // topThreeAthletes: [
+      //   'Mr Pink - 97s',
+      //   'Mrs Orange - 98s',
+      //   'Rod Hall - 100s',
+      // ],
     }, {
       id: 2,
       name: 'Segment 2',
-      personalRecord: 200,
+      personalRecord: '200s',
       ranking: 2,
       athleteCount: 2000,
-      timeFromKom: 2,
-      distance: 2000,
-      elevationGain: 4,
-      topThreeAthletes: [
-        'Mr Orange - 198s',
-        'Rod Hall - 200s',
-        'Mrs Orange - 201s',
-      ],
+      timeFromKom: '2s',
+      distance: '2000m',
+      elevationGain: '4m',
+      // topThreeAthletes: [
+      //   'Mr Orange - 198s',
+      //   'Rod Hall - 200s',
+      //   'Mrs Orange - 201s',
+      // ],
     }, {
       id: 3,
       name: 'Segment 3',
-      personalRecord: 300,
+      personalRecord: '300s',
       ranking: 30,
       athleteCount: 3000,
-      timeFromKom: 30,
-      distance: 3000,
-      elevationGain: 30,
-      topThreeAthletes: [
-        'Mr Pink - 270s',
-        'Mrs Orange - 273s',
-        'Mr Brown - 275s',
-      ],
+      timeFromKom: '30s',
+      distance: '3000m',
+      elevationGain: '30m',
+      // topThreeAthletes: [
+      //   'Mr Pink - 270s',
+      //   'Mrs Orange - 273s',
+      //   'Mr Brown - 275s',
+      // ],
     }]);
   })),
 }));
@@ -98,20 +98,20 @@ describe('segments list', () => {
     wrapper.update();
 
     const tableRow = wrapper.find('tbody tr').at(0);
-    expect(tableRow.text()).toBe('Segment 1100310003100012Mr Pink - 97sMrs Orange - 98sRod Hall - 100s');
+    expect(tableRow.text()).toBe('Segment 1100s310003s1000m12m');
   });
 
   it('should render second table row correctly', () => {
     wrapper.update();
 
     const tableRow = wrapper.find('tbody tr').at(1);
-    expect(tableRow.text()).toBe('Segment 220022000220004Mr Orange - 198sRod Hall - 200sMrs Orange - 201s');
+    expect(tableRow.text()).toBe('Segment 2200s220002s2000m4m');
   });
 
   it('should render third table row correctly', () => {
     wrapper.update();
 
     const tableRow = wrapper.find('tbody tr').at(2);
-    expect(tableRow.text()).toBe('Segment 330030300030300030Mr Pink - 270sMrs Orange - 273sMr Brown - 275s');
+    expect(tableRow.text()).toBe('Segment 3300s30300030s3000m30m');
   });
 });

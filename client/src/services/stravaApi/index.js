@@ -12,31 +12,50 @@ const getLeaderboard = async (id, accessToken) => axios.get(`${process.env.REACT
   },
 });
 
+const convertSecondsToTime = (seconds) => {
+  if (seconds < 60) {
+    return `${seconds}s`;
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds - minutes * 60;
+
+  return `${minutes}:${remainingSeconds}`;
+};
+
 export const getSegmentStats = async (accessToken) => {
   const segmentsResponse = await getSegments(accessToken);
 
-  return Promise.all(segmentsResponse.data.map(async ({
+  const segmentsData = await Promise.all(segmentsResponse.data.map(async ({
     id,
     name,
-    athlete_pr_effort: athletePrEffort,
-    distance,
+    athlete_pr_effort: { elapsed_time: personalRecord },
+    distance: dist,
     elevation_high: elevationHigh,
     elevation_low: elevationLow,
   }) => {
     const leaderboardResponse = await getLeaderboard(id, accessToken);
+    const { data: { entries } } = leaderboardResponse;
+
+    const ranking = entries.findIndex((entry) => entry.elapsed_time >= personalRecord) + 1;
+    const timeFromKom = `${personalRecord - entries[0].elapsed_time}s`;
+    const distance = `${Math.round(dist)}m`;
+    const elevationGain = `${Math.round(elevationHigh - elevationLow)}m`;
 
     return {
       id,
       name,
-      personalRecord: athletePrEffort.elapsed_time,
-      // ranking: null,
+      personalRecord: convertSecondsToTime(personalRecord),
+      ranking,
       athleteCount: leaderboardResponse.data.effort_count,
-      // timeFromKom: null,
+      timeFromKom,
       distance,
-      elevationGain: elevationHigh - elevationLow,
-      topThreeAthletes: leaderboardResponse.data.entries.slice(0, 3).map((athlete) => (
-        `${athlete.athlete_name} - ${athlete.elapsed_time}s`
-      )).join('\r\n'),
+      elevationGain,
+      // topThreeAthletes: leaderboardResponse.data.entries.slice(0, 3).map((athlete) => (
+      //   `${athlete.athlete_name} - ${athlete.elapsed_time}s`
+      // )).join('\r\n'),
     };
   }));
+
+  return segmentsData.sort((a, b) => a.ranking - b.ranking);
 };

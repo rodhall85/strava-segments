@@ -44,11 +44,11 @@ const SegmentsList = ({ accessToken }) => {
           <TextTh>Segment</TextTh>
           <NumberTh>My PR</NumberTh>
           <NumberTh>My Ranking</NumberTh>
-          <NumberTh>Total ANumberThletes</NumberTh>
+          <NumberTh>Athlete Count</NumberTh>
           <NumberTh>Time from KOM</NumberTh>
           <NumberTh>Distance</NumberTh>
           <NumberTh>Elevation Gain</NumberTh>
-          <TextTh>Top 3</TextTh>
+          {/* <TextTh>Top 3</TextTh> */}
         </tr>
       </thead>
       <tbody>
@@ -61,7 +61,7 @@ const SegmentsList = ({ accessToken }) => {
             <NumberTd>{segment.timeFromKom}</NumberTd>
             <NumberTd>{segment.distance}</NumberTd>
             <NumberTd>{segment.elevationGain}</NumberTd>
-            <TextTd>{segment.topThreeAthletes}</TextTd>
+            {/* <TextTd>{segment.topThreeAthletes}</TextTd> */}
           </tr>
         ))}
       </tbody>
