@@ -36,7 +36,7 @@ describe('when user is logged in', () => {
   });
 
   it('should display name', () => {
-    const name = wrapper.find('span[children="Rod Hall"]');
+    const name = wrapper.find('span[children="Hi Rod Hall! "]');
 
     expect(name.length).toBe(1);
   });

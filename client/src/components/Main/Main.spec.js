@@ -40,7 +40,7 @@ describe('Main page', () => {
 
   describe('user sign in', () => {
     it('should redirect the user to authenticate when clicked', () => {
-      const button = wrapper.find('#signin-button');
+      const button = wrapper.find('#signin-button').at(0);
       const expectedUrl = 'https://example.com/oauth/authorize?client_id=12345&redirect_uri=https://example.com&response_type=code&scope=read';
 
       button.simulate('click');
@@ -53,7 +53,7 @@ describe('Main page', () => {
 
       beforeEach(async (done) => {
         window.history.pushState({}, '', '?code=foo');
-        const button = wrapper.find('#signin-button');
+        const button = wrapper.find('#signin-button').at(0);
 
         await button.simulate('click');
         done();

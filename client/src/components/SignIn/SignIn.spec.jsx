@@ -19,19 +19,19 @@ describe('<SignIn />', () => {
   });
 
   it('should render a message', () => {
-    const message = wrapper.find('#signin-message');
+    const message = wrapper.find('#signin-message').at(0);
 
     expect(message.length).toBe(1);
   });
 
   it('should render a signin button', () => {
-    const button = wrapper.find('#signin-button');
+    const button = wrapper.find('#signin-button').at(0);
 
     expect(button.length).toBe(1);
   });
 
   it('should call attemptSignIn when SignIn button is clicked', () => {
-    const button = wrapper.find('#signin-button');
+    const button = wrapper.find('#signin-button').at(0);
 
     button.simulate('click');
 

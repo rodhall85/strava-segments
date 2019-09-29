@@ -30,7 +30,7 @@ const StravaButton = styled.div`
 
 const SignIn = ({ attemptSignIn }) => (
   <Wrapper>
-    <Message>
+    <Message id="signin-message">
       <p>
         Welcome to
         {' '}
@@ -41,7 +41,7 @@ const SignIn = ({ attemptSignIn }) => (
         and see how you compare to the&nbsp;world!
       </p>
     </Message>
-    <StravaButton onClick={attemptSignIn} onKeyUp={attemptSignIn} role="button" tabIndex="0">
+    <StravaButton id="signin-button" onClick={attemptSignIn} onKeyUp={attemptSignIn} role="button" tabIndex="0">
       Sign In
     </StravaButton>
   </Wrapper>

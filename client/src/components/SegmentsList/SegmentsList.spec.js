@@ -52,80 +52,7 @@ jest.mock('../../services/stravaApi', () => ({
     }]);
   })),
 }));
-// jest.mock('axios', () => ({
-//   get: jest.fn().mockImplementation(() => new Promise((resolve) => {
-//     resolve({
-//       status: 200,
-//       data: [{
-//         id: 1,
-//         name: 'Segment 1',
-//         activity_type: 'Ride',
-//         distance: 1000,
-//         climb_category: 0,
-//         city: 'City Of Peterborough',
-//         state: 'Cambridgeshire',
-//         country: 'United Kingdom',
-//         private: false,
-//         hazardous: false,
-//         starred: true,
-//         pr_time: 100,
-//         athlete_pr_effort: {
-//           id: 1,
-//           elapsed_time: 100,
-//           distance: 1000,
-//           start_date: '2019-01-01T10:00:00Z',
-//           start_date_local: '2019-01-01T10:00:00Z',
-//           is_kom: false,
-//         },
-//         starred_date: '2019-01-01T10:00:00Z',
-//       }, {
-//         id: 2,
-//         name: 'Segment 2',
-//         activity_type: 'Ride',
-//         distance: 2000,
-//         climb_category: 0,
-//         city: 'City Of Peterborough',
-//         state: 'Cambridgeshire',
-//         country: 'United Kingdom',
-//         private: false,
-//         hazardous: false,
-//         starred: true,
-//         pr_time: 200,
-//         athlete_pr_effort: {
-//           id: 1,
-//           elapsed_time: 200,
-//           distance: 2000,
-//           start_date: '2019-01-01T10:00:00Z',
-//           start_date_local: '2019-01-01T10:00:00Z',
-//           is_kom: false,
-//         },
-//         starred_date: '2019-01-01T10:00:00Z',
-//       }, {
-//         id: 3,
-//         name: 'Segment 3',
-//         activity_type: 'Ride',
-//         distance: 3000,
-//         climb_category: 0,
-//         city: 'City Of Peterborough',
-//         state: 'Cambridgeshire',
-//         country: 'United Kingdom',
-//         private: false,
-//         hazardous: false,
-//         starred: true,
-//         pr_time: 300,
-//         athlete_pr_effort: {
-//           id: 1,
-//           elapsed_time: 300,
-//           distance: 3000,
-//           start_date: '2019-01-01T10:00:00Z',
-//           start_date_local: '2019-01-01T10:00:00Z',
-//           is_kom: false,
-//         },
-//         starred_date: '2019-01-01T10:00:00Z',
-//       }],
-//     });
-//   })),
-// }));
+
 describe('segments list', () => {
   let wrapper;
 
@@ -139,12 +66,6 @@ describe('segments list', () => {
     stravaApi.getSegmentStats.mockClear();
   });
 
-  it('should render a list', () => {
-    const list = wrapper.find('ul');
-
-    expect(list.length).toBe(1);
-  });
-
   it('should call Strava API', () => {
     expect(stravaApi.getSegmentStats).toHaveBeenCalled();
   });
@@ -153,55 +74,44 @@ describe('segments list', () => {
     expect(stravaApi.getSegmentStats).toHaveBeenCalledWith('fake_access_token');
   });
 
-  it('should render 3 list items', () => {
+  it('should render a table', () => {
+    const list = wrapper.find('table');
+
+    expect(list.length).toBe(1);
+  });
+
+  it('should render table header', () => {
     wrapper.update();
 
-    const listItems = wrapper.find('li');
+    const listItems = wrapper.find('thead tr');
+    expect(listItems.length).toBe(1);
+  });
+
+  it('should render 3 table rows', () => {
+    wrapper.update();
+
+    const listItems = wrapper.find('tbody tr');
     expect(listItems.length).toBe(3);
   });
 
-  it('should render first list item correctly', () => {
+  it('should render first table row correctly', () => {
     wrapper.update();
 
-    const listItem = wrapper.find('li').at(0);
-
-    expect(listItem.find('span.segment-name').text()).toBe('Segment 1');
-    expect(listItem.find('span.pr').text()).toBe('100');
-    expect(listItem.find('span.ranking').text()).toBe('3');
-    expect(listItem.find('span.athlete-count').text()).toBe('1000');
-    expect(listItem.find('span.time-from-kom').text()).toBe('3');
-    expect(listItem.find('span.distance').text()).toBe('1000');
-    expect(listItem.find('span.elevation-gain').text()).toBe('12');
-    expect(listItem.find('span.top-three-athletes').text()).toBe('Mr Pink - 97sMrs Orange - 98sRod Hall - 100s');
+    const tableRow = wrapper.find('tbody tr').at(0);
+    expect(tableRow.text()).toBe('Segment 1100310003100012Mr Pink - 97sMrs Orange - 98sRod Hall - 100s');
   });
 
-  it('should render second list item correctly', () => {
+  it('should render second table row correctly', () => {
     wrapper.update();
 
-    const listItem = wrapper.find('li').at(1);
-
-    expect(listItem.find('span.segment-name').text()).toBe('Segment 2');
-    expect(listItem.find('span.pr').text()).toBe('200');
-    expect(listItem.find('span.ranking').text()).toBe('2');
-    expect(listItem.find('span.athlete-count').text()).toBe('2000');
-    expect(listItem.find('span.time-from-kom').text()).toBe('2');
-    expect(listItem.find('span.distance').text()).toBe('2000');
-    expect(listItem.find('span.elevation-gain').text()).toBe('4');
-    expect(listItem.find('span.top-three-athletes').text()).toBe('Mr Orange - 198sRod Hall - 200sMrs Orange - 201s');
+    const tableRow = wrapper.find('tbody tr').at(1);
+    expect(tableRow.text()).toBe('Segment 220022000220004Mr Orange - 198sRod Hall - 200sMrs Orange - 201s');
   });
 
-  it('should render third list item correctly', () => {
+  it('should render third table row correctly', () => {
     wrapper.update();
 
-    const listItem = wrapper.find('li').at(2);
-
-    expect(listItem.find('span.segment-name').text()).toBe('Segment 3');
-    expect(listItem.find('span.pr').text()).toBe('300');
-    expect(listItem.find('span.ranking').text()).toBe('30');
-    expect(listItem.find('span.athlete-count').text()).toBe('3000');
-    expect(listItem.find('span.time-from-kom').text()).toBe('30');
-    expect(listItem.find('span.distance').text()).toBe('3000');
-    expect(listItem.find('span.elevation-gain').text()).toBe('30');
-    expect(listItem.find('span.top-three-athletes').text()).toBe('Mr Pink - 270sMrs Orange - 273sMr Brown - 275s');
+    const tableRow = wrapper.find('tbody tr').at(2);
+    expect(tableRow.text()).toBe('Segment 330030300030300030Mr Pink - 270sMrs Orange - 273sMr Brown - 275s');
   });
 });

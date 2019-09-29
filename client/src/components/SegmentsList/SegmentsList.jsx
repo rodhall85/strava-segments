@@ -1,7 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { getSegmentStats } from '../../services/stravaApi';
+
+const Table = styled.table`
+  max-width: 1300px;
+  width: 70%;
+  margin: 30px auto;
+`;
+
+const TextTh = styled.th`
+  text-align: left;
+`;
+
+const NumberTh = styled.th`
+  text-align: right;
+`;
+
+const TextTd = styled.td`
+  text-align: left;
+`;
+
+const NumberTd = styled.td`
+  text-align: right;
+`;
 
 const SegmentsList = ({ accessToken }) => {
   const [segments, setSegments] = useState([]);
@@ -15,35 +38,34 @@ const SegmentsList = ({ accessToken }) => {
   }, []);
 
   return (
-    <table>
+    <Table>
       <thead>
         <tr>
-          <th>Segment</th>
-          <th>My PR</th>
-          <th>My Ranking</th>
-          <th>Total Athletes</th>
-          <th>Time from KOM</th>
-          <th>Distance</th>
-          <th>Elevation Gain</th>
-          <th>Top 3</th>
+          <TextTh>Segment</TextTh>
+          <NumberTh>My PR</NumberTh>
+          <NumberTh>My Ranking</NumberTh>
+          <NumberTh>Total ANumberThletes</NumberTh>
+          <NumberTh>Time from KOM</NumberTh>
+          <NumberTh>Distance</NumberTh>
+          <NumberTh>Elevation Gain</NumberTh>
+          <TextTh>Top 3</TextTh>
         </tr>
       </thead>
       <tbody>
         {segments && segments.map((segment) => (
           <tr key={segment.id}>
-            <td className="segment-name">{segment.name}</td>
-            <td className="pr">{segment.personalRecord}</td>
-            <td className="ranking">{segment.ranking}</td>
-            <td className="athlete-count">{segment.athleteCount}</td>
-            <td className="time-from-kom">{segment.timeFromKom}</td>
-            <td className="distance">{segment.distance}</td>
-            <td className="elevation-gain">{segment.elevationGain}</td>
-            <td className="top-three-athletes">{segment.topThreeAthletes}</td>
-
+            <TextTd>{segment.name}</TextTd>
+            <NumberTd>{segment.personalRecord}</NumberTd>
+            <NumberTd>{segment.ranking}</NumberTd>
+            <NumberTd>{segment.athleteCount}</NumberTd>
+            <NumberTd>{segment.timeFromKom}</NumberTd>
+            <NumberTd>{segment.distance}</NumberTd>
+            <NumberTd>{segment.elevationGain}</NumberTd>
+            <TextTd>{segment.topThreeAthletes}</TextTd>
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 
