@@ -35,7 +35,7 @@ const SegmentsList = ({ accessToken }) => {
       setSegments(result);
     };
     fetchSegments();
-  }, []);
+  }, [accessToken]);
 
   return (
     <Table>
