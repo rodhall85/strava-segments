@@ -59,7 +59,7 @@ describe('strava api', () => {
 
   it('responds with the correct data', async () => {
     const response = await getSegmentStats('fake_access_token');
-    
+
     expect(response[0].timeFromKom).toEqual('1:40');
     expect(response[1].timeFromKom).toEqual('1:00');
     expect(response[2].timeFromKom).toEqual('59s');

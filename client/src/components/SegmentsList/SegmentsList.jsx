@@ -26,10 +26,6 @@ const NumberTd = styled.td`
   text-align: right;
 `;
 
-const Link = styled.a`
-  color: #eee;
-`;
-
 const SegmentsList = ({ accessToken }) => {
   const [segments, setSegments] = useState([]);
 
@@ -59,9 +55,9 @@ const SegmentsList = ({ accessToken }) => {
         {segments && segments.map((segment) => (
           <tr key={segment.id}>
             <TextTd>
-              <Link href={`https://strava.com/segments/${segment.id}`} target="_blank" rel="noopener noreferrer">
+              <a href={`https://strava.com/segments/${segment.id}`} target="_blank" rel="noopener noreferrer">
                 {segment.name}
-              </Link>
+              </a>
             </TextTd>
             <NumberTd>{segment.personalRecord}</NumberTd>
             <NumberTd>{segment.ranking}</NumberTd>

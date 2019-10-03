@@ -1,12 +1,14 @@
 html {
   --background-color: #eee;
   --color: #111;
+  --link-color: #1a5a87;
 }
 
 @media screen and (prefers-color-scheme: dark) {
   html {
     --background-color: #111;
     --color: #eee;
+    --link-color: #eee;
   }
 }
 
@@ -14,4 +16,8 @@ body {
   background-color: var(--background-color);
   color: var(--color);
   font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  color: var(--link-color);
 }
