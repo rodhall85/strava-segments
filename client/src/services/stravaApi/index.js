@@ -20,7 +20,7 @@ const convertSecondsToTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds - minutes * 60;
 
-  return `${minutes}:${remainingSeconds}`;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
 
 export const getSegmentStats = async (accessToken) => {
@@ -37,10 +37,11 @@ export const getSegmentStats = async (accessToken) => {
     const leaderboardResponse = await getLeaderboard(id, accessToken);
     const { data: { entries } } = leaderboardResponse;
 
-    const ranking = entries.findIndex((entry) => entry.elapsed_time >= personalRecord) + 1;
-    const timeFromKom = `${personalRecord - entries[0].elapsed_time}s`;
-    const distance = `${Math.round(dist)}m`;
-    const elevationGain = `${Math.round(elevationHigh - elevationLow)}m`;
+    const athleteEntry = entries.find((entry) => entry.elapsed_time >= personalRecord);
+    const { rank: ranking } = athleteEntry || { rank: 'Unranked' };
+    const timeFromKom = `${convertSecondsToTime(personalRecord - entries[0].elapsed_time)}`;
+    const distance = `${Math.round(dist).toLocaleString()}m`;
+    const elevationGain = `${Math.round(elevationHigh - elevationLow).toLocaleString()}m`;
 
     return {
       id,

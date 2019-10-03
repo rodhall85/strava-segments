@@ -1,13 +1,51 @@
 import axios from 'axios';
 
-import { getSegmentStats } from '.';
-import mockSegmentsData from '../../test/mock-segments-response';
-import mockLeaderboardData from '../../test/mock-leaderboard-data';
+import { getSegmentStats } from '..';
+import mockSegmentsData from '../../../test/mock-segments-response';
+import mockLeaderboardData from '../../../test/mock-leaderboard-data';
 
 process.env.REACT_APP_STRAVA_API_URL = 'https://fake-strava.com';
 
 jest.mock('axios', () => ({
   get: jest.fn().mockImplementation((url) => new Promise((resolve) => {
+    mockSegmentsData[0].athlete_pr_effort.elapsed_time = 101;
+    mockLeaderboardData[0].entries = [{
+      athlete_name: 'Mr Orange',
+      elapsed_time: 100,
+      moving_time: 100,
+      start_date: '2018-09-26T13:04:57Z',
+      start_date_local: '2018-09-26T14:04:57Z',
+      rank: 1,
+    }, {
+      athlete_name: 'Mr Duplicate',
+      elapsed_time: 101,
+      moving_time: 101,
+      start_date: '2018-12-02T13:25:57Z',
+      start_date_local: '2018-12-02T13:25:57Z',
+      rank: 21,
+    }, {
+      athlete_name: 'Mr Duplicate',
+      elapsed_time: 101,
+      moving_time: 101,
+      start_date: '2018-12-02T13:25:57Z',
+      start_date_local: '2018-12-02T13:25:57Z',
+      rank: 21,
+    }, {
+      athlete_name: 'Mr Blue',
+      elapsed_time: 101,
+      moving_time: 101,
+      start_date: '2018-12-02T13:25:57Z',
+      start_date_local: '2018-12-02T13:25:57Z',
+      rank: 21,
+    }, {
+      athlete_name: 'Mr Violet',
+      elapsed_time: 105,
+      moving_time: 105,
+      start_date: '2018-12-02T13:25:57Z',
+      start_date_local: '2018-12-02T13:25:57Z',
+      rank: 31,
+    }];
+
     const requests = {
       'https://fake-strava.com/api/v3/segments/starred': mockSegmentsData,
       'https://fake-strava.com/api/v3/segments/1/leaderboard': mockLeaderboardData[0],
@@ -64,40 +102,17 @@ describe('strava api', () => {
   });
 
   it('responds with the correct data', async () => {
-    const expectedResponse = [{
-      id: 2,
-      name: 'Segment 2',
-      personalRecord: '1:40',
-      ranking: 1,
-      athleteCount: 2000,
-      timeFromKom: '0s',
-      distance: '2000m',
-      elevationGain: '2m',
-      // topThreeAthletes: 'Mr Orange - 100s\r\nMr Blue - 101s\r\nMr Violet - 105s',
-    }, {
+    const response = await getSegmentStats('fake_access_token');
+    expect(response[2]).toEqual({
       id: 1,
       name: 'Segment 1',
-      personalRecord: '31s',
-      ranking: 2,
+      personalRecord: '1:41',
+      ranking: 21,
       athleteCount: 1000,
       timeFromKom: '1s',
-      distance: '1000m',
+      distance: '1,000m',
       elevationGain: '4m',
       // topThreeAthletes: 'Mr Blue - 30s\r\nMr Pink - 31s\r\nMr Green - 32s',
-    }, {
-      id: 3,
-      name: 'Segment 3',
-      personalRecord: '1:15',
-      ranking: 3,
-      athleteCount: 3000,
-      timeFromKom: '8s',
-      distance: '3000m',
-      elevationGain: '3m',
-      // topThreeAthletes: 'Mr Brown - 67s\r\nMr Indigo - 68s\r\nMr Yellow - 75s',
-    }];
-
-    const response = await getSegmentStats('fake_access_token');
-
-    expect(response).toEqual(expectedResponse);
+    });
   });
 });

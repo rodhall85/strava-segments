@@ -30,7 +30,7 @@ export default [{
   pr_time: 31,
   athlete_pr_effort: {
     id: 1,
-    elapsed_time: 31,
+    elapsed_time: 30,
     distance: 519.5,
     start_date: '2019-08-06T16:06:30Z',
     start_date_local: '2019-08-06T17:06:30Z',
@@ -69,7 +69,7 @@ export default [{
   pr_time: 100,
   athlete_pr_effort: {
     id: 65158369655,
-    elapsed_time: 100,
+    elapsed_time: 101,
     distance: 519.5,
     start_date: '2019-08-06T16:06:30Z',
     start_date_local: '2019-08-06T17:06:30Z',
