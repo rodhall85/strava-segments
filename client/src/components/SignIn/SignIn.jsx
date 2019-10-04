@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -28,24 +28,36 @@ const StravaButton = styled.div`
   border-radius: 10px;
 `;
 
-const SignIn = ({ attemptSignIn }) => (
-  <Wrapper>
-    <Message id="signin-message">
-      <p>
-        Welcome to
-        {' '}
-        <strong>Strava&nbsp;Segments!</strong>
-      </p>
-      <p>
-        Please&nbsp;Signin to Strava so that we can fetch your starred&nbsp;segments
-        and see how you compare to the&nbsp;world!
-      </p>
-    </Message>
-    <StravaButton id="signin-button" onClick={attemptSignIn} onKeyUp={attemptSignIn} role="button" tabIndex="0">
-      Sign In
-    </StravaButton>
-  </Wrapper>
-);
+const SignIn = ({ attemptSignIn }) => {
+  useEffect(() => {
+    const { search } = window.location;
+    const params = new URLSearchParams(search);
+    const code = params.get('code');
+
+    if (code) {
+      attemptSignIn();
+    }
+  }, [attemptSignIn]);
+
+  return (
+    <Wrapper>
+      <Message id="signin-message">
+        <p>
+          Welcome to
+          {' '}
+          <strong>Strava&nbsp;Segments!</strong>
+        </p>
+        <p>
+          Please&nbsp;Signin to Strava so that we can fetch your starred&nbsp;segments
+          and see how you compare to the&nbsp;world!
+        </p>
+      </Message>
+      <StravaButton id="signin-button" onClick={attemptSignIn} onKeyUp={attemptSignIn} role="button" tabIndex="0">
+        Sign In
+      </StravaButton>
+    </Wrapper>
+  );
+};
 
 SignIn.propTypes = {
   attemptSignIn: PropTypes.func.isRequired,
