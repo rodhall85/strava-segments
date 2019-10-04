@@ -10,7 +10,7 @@
     "lint:js": "eslint src --ext .jsx,.js -f table --fix",
     "lint:css": "stylelint src/\"**/*.scss\"",
     "lint": "npm run lint:js && npm run lint:css",
-    "deploy": "aws s3 sync build/ s3://strava-segments.co.uk"
+    "deploy": "aws s3 sync build/ s3://stravasegments.com"
   },
   "eslintConfig": {
     "extends": "react-app"
