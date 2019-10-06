@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Main from '.';
 import * as tokenApi from '../../services/tokenApi';
@@ -13,7 +14,11 @@ describe('Main page', () => {
   window.location.replace = jest.fn();
 
   beforeEach(() => {
-    wrapper = mount(<Main />);
+    wrapper = mount(
+      <Router>
+        <Main />
+      </Router>,
+    );
   });
 
   afterEach(() => {
