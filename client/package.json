@@ -10,7 +10,8 @@
     "lint:js": "eslint src --ext .jsx,.js -f table --fix",
     "lint:css": "stylelint src/\"**/*.scss\"",
     "lint": "npm run lint:js && npm run lint:css",
-    "deploy": "aws s3 sync build/ s3://stravasegments.com"
+    "deploy": "aws s3 sync build/ s3://stravasegments.com",
+    "invalidate-cf-cache": "aws cloudfront create-invalidation --distribution-id E19UQ5ZCEU80PM --paths /*"
   },
   "eslintConfig": {
     "extends": "react-app"
